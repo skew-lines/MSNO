@@ -31,24 +31,24 @@ Some internal names and command-line options retain the earlier `irnr` terminolo
 
 ## Installation
 
-The commands below use the Python 3.7 / PyTorch 1.12.1 stack documented by the upstream implementation as a starting point. They are not a newly verified environment specification. Use a Linux environment with a compatible CUDA setup and C++ build tools for fairseq.
+The installation commands below use Python 3.10, PyTorch 2.6.0, torchvision 0.21.0, and torchaudio 2.6.0 with CUDA 12.4 wheels, reflecting the environment versions selected during reproduction. Use a Linux environment with a compatible NVIDIA driver and C++ build tools for fairseq.
 
 ```bash
-conda create -n msno python=3.7
+conda create -n msno python=3.10
 conda activate msno
 
 # Select PyTorch packages compatible with your CUDA environment.
-pip install torch==1.12.1 torchvision==0.13.1 torchaudio==0.12.1
+pip install torch==2.6.0 torchvision==0.21.0 torchaudio==2.6.0 --index-url https://download.pytorch.org/whl/cu124
 
 # Extract only if the source directory is not already present.
 unzip fairseq-a54021305d6b3c4c5959ac9395135f63202db8f1.zip
 pip install --editable ./fairseq-a54021305d6b3c4c5959ac9395135f63202db8f1
 
 pip install -r requirements.txt
-pip install numpy tqdm soundfile
+pip install numpy tqdm
 ```
 
-`requirements.txt` is a partial dependency list; PyTorch and the bundled fairseq must be installed separately. The bundled fairseq uses legacy Hydra/OmegaConf dependencies, so preserve its dependency constraints when setting up the environment.
+`requirements.txt` is a partial dependency list and includes `soundfile==0.12.0`; retain this selected version when reproducing the environment. PyTorch and the bundled fairseq must be installed separately. The `#cuda==11.1` line in that file is a legacy comment, not an installation requirement; the command above selects CUDA 12.4 wheels. The bundled fairseq uses legacy Hydra/OmegaConf dependencies, so preserve its dependency constraints when setting up the environment.
 
 Prepare an XLS-R 300M checkpoint, such as `xlsr2_300m.pt`, and pass its location through `--ssl_checkpoint`. Audio datasets and pretrained weights are not included.
 
