@@ -1,0 +1,25 @@
+CUDA_VISIBLE_DEVICES=0 python main.py \
+  --database_path /root/autodl-tmp/continual_manifests \
+  --ssl_checkpoint /root/autodl-fs/xlsr2_300m.pt \
+  --train_tasks ASVspoof2019_LA,for-norm,XMAD,ASVspoof5 \
+  --external_tasks release_in_the_wild,CodecFake,ASVspoof2021_LA_eval,ASVspoof2021_DF_eval,MLAAD_M-AILABS \
+  --start_task_idx 0 \
+  --run_dir /root/autodl-tmp/cl_runs_final/irnr/v12_full_task_kd07_shared02_seed_1234 \
+  --batch_size 20 \
+  --eval_batch_size 20 \
+  --num_epochs_per_task 50 \
+  --early_stop_patience 1 \
+  --role_activation_tau 1.0 \
+  --role_temperature 0.7 \
+  --gamma 0.05 \
+  --drift_warmup_epochs 2 \
+  --eps0 0.1 \
+  --penalty_rho 10.0 \
+  --lambda_lr 0.5 \
+  --lambda_max 20 \
+  --projection_margin 2.0 \
+  --distill_weight 0.7 \
+  --distill_temperature 2.0 \
+  --conflict_scale_shared 0.2 \
+  --irnr_diagnostics \
+  --seed 1234
